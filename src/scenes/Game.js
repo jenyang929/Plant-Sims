@@ -7,7 +7,7 @@ export default class extends Phaser.Scene {
     super({ key: 'GameScene' })
     this.level = 1
   }
-  init () {}
+  init (){}
   preload () {
     let background = this.load.image('green', './assets/images/green.jpg')
     let waterButton = this.load.image('waterButton', './assets/images/button.png')
@@ -44,12 +44,20 @@ export default class extends Phaser.Scene {
     this.waterButton.setScale(0.5)
     this.waterButton.setInteractive()
     this.waterButton.on('pointerdown', () => {
-
+      this.hp.increase(20)
+      this.hp.setValue(this.hp.value)
+      this.changeHPText()
+      if (this.hp.value >= 100) {
+        this.increaseLevel()
+      }
     })
 
   }
+  changeHPText () {
+    this.currentHP.setText(`HP: ${this.hp.value}`);
 
+  }
   increaseLevel () {
-
+    console.log(this.level)
   }
 }
