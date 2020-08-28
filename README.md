@@ -7,6 +7,20 @@ Objective: Take care of your plant by giving it water and sunshine!
 ## Back End
 - Non-relational DB
 
+## To install and play
+Please fork and clone this repo.
+
+To install the dependencies: 
+
+``` 
+npm install 
+```
+
+To start your server
+```
+npm start
+```
+
 ## Phaser + ES6 + Webpack Boilerplate
 <details>
   <summary>Click to expand!</summary>
