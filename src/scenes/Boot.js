@@ -13,6 +13,13 @@ export default class extends Phaser.Scene {
 
     this.load.image('loaderBg', './assets/images/loader-bg.png')
     this.load.image('loaderBar', './assets/images/loader-bar.png')
+    this.load.image('background', './assets/images/green.jpg')
+    this.load.image('plant1', 'assets/images/plant1.png')
+    this.load.image('plant2', 'assets/images/plant2.png')
+    this.load.image('plant3', 'assets/images/plant3.png')
+    this.load.image('plant4', 'assets/images/plant4.png')
+    this.load.image('plant5', 'assets/images/plant5.png')
+    this.load.image('plant6', 'assets/images/plant6.png')
 
     WebFont.load({
       google: {
