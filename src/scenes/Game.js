@@ -14,14 +14,6 @@ export default class extends Phaser.Scene {
   }
 
   create () {
-    // sprite
-    // this.plant = new Plant({
-    //   scene: this,
-    //   x: 400,
-    //   y: 300,
-    //   asset: 'plant1'
-    // })
-
     // plant and background
     this.bg = this.add.tileSprite(400, 300, 800, 600, 'background')
     let plant = this.add.image(400, 400, 'plant1')
@@ -58,6 +50,31 @@ export default class extends Phaser.Scene {
 
   }
   increaseLevel () {
-    console.log(this.level)
+    //increases level once HP is 100
+    this.level++
+
+    // when level increases, "plant is growing" pops up
+    this.timedEvent = this.time.addEvent({
+      delay: 1000,
+      callback: () => {
+        let nextLevel =  this.add.text(300, 200, "Your plant is growing!", {
+          fill: "#000000"
+        })
+        this.destroyText = this.time.addEvent({
+          delay: 4000,
+          callback: () => {
+            if (nextLevel) {
+              nextLevel.destroy()
+            }
+          }
+        })
+      },
+      callbackScope: this,
+      loop: false,
+    });
+
+    // HP goes back down to 10 with an increased level
+    // this.hp.value = 10
+    // this.changeHPText()
   }
 }

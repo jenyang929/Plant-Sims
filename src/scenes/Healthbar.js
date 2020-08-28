@@ -20,15 +20,9 @@ export default class Healthbar {
       this.value = 100
     }
   }
-  decrease (amount) {
-    this.value -= amount
-    if (this.value < 0) {
-      this.value = 0;
-    }
-  }
+
   makeBar (x, y, color) {
     // draw the bar
-    console.log(this.scene)
     let bar = this.scene.add.graphics()
 
     // color the bar
