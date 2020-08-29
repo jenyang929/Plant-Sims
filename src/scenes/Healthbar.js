@@ -5,7 +5,7 @@ export default class HealthBar {
   constructor (scene, x, y) {
     this.x = x;
     this.y = y;
-    this.value = 10;
+    this.value = 0;
     this.scene = scene;
     this.create();
   }

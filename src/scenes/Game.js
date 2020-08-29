@@ -87,7 +87,7 @@ export default class extends Phaser.Scene {
       delay: 3000,
       callback: () => {
 
-        this.hp.value = 10
+        this.hp.value = 0
         this.hp.setValue(this.hp.value)
         this.changeHPText()
         if (this.level === 2) {
