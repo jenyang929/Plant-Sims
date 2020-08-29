@@ -1,6 +1,6 @@
 /* globals __DEV__ */
 import Phaser from 'phaser'
-import HealthBar from './Healthbar'
+import HealthBar from './HealthBar'
 
 export default class extends Phaser.Scene {
   constructor () {
@@ -16,8 +16,8 @@ export default class extends Phaser.Scene {
   create () {
     // plant and background
     this.bg = this.add.tileSprite(400, 300, 800, 600, 'background')
-    let plant = this.add.image(400, 400, 'plant1')
-    plant.setScale(0.3)
+    this.currentPlant = this.add.image(400, 400, 'plant1')
+    this.currentPlant.setScale(0.3)
     this.add.text(220, 500, 'Plant Simulation Game', {
       font: '40px Bangers',
       fill: '#000000'
@@ -34,6 +34,7 @@ export default class extends Phaser.Scene {
     // water button
     this.waterButton = this.add.image(650, 80, 'waterButton')
     this.waterButton.setScale(0.5)
+    // this.input.enabled = true
     this.waterButton.setInteractive()
     this.waterButton.on('pointerdown', () => {
       this.hp.increase(20)
@@ -52,6 +53,10 @@ export default class extends Phaser.Scene {
   increaseLevel () {
     //increases level once HP is 100
     this.level++
+
+    //Disable water button so level doesn't increase
+    console.log(this.level)
+
 
     // when level increases, "plant is growing" pops up
     this.timedEvent = this.time.addEvent({
@@ -74,7 +79,24 @@ export default class extends Phaser.Scene {
     });
 
     // HP goes back down to 10 with an increased level
-    // this.hp.value = 10
-    // this.changeHPText()
+    this.restartHPAfterLevel()
+  }
+  //new plant grows - destroy old plant so new plant renders
+  restartHPAfterLevel() {
+    this.restartHP = this.time.addEvent({
+      delay: 3000,
+      callback: () => {
+
+        this.hp.value = 10
+        this.hp.setValue(this.hp.value)
+        this.changeHPText()
+        if (this.level === 2) {
+          this.currentPlant.destroy()
+          this.currentPlant = this.add.image(400, 400, 'plant2')
+          this.currentPlant.setScale(0.3)
+          this.input.enabled = true
+        }
+      }
+    })
   }
 }

@@ -1,7 +1,7 @@
 
-import Phaser from 'Phaser'
+import Phaser from 'phaser'
 
-export default class Healthbar {
+export default class HealthBar {
   constructor (scene, x, y) {
     this.x = x;
     this.y = y;
