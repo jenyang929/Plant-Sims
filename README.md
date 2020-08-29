@@ -1,7 +1,7 @@
 # Plant Simulation Game
 Objective: Take care of your plant by giving it water and sunshine!
 - Press the water button to give the plant water! 
-- As you give water, the HP of the plant increases. Once you hit 100, the plant grows! 
+- As you give water, the HP of the plant increases. Once you hit 100, your level increases and the plant grows! 
 
 ## Front End
 - Phaser 3, Javascript, HTML
