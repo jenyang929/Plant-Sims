@@ -14,38 +14,49 @@ export default class extends Phaser.Scene {
   }
 
   create () {
-    // plant and background
+    this.createBackground()
+    this.createPlant()
+    this.createHPBar()
+    this.createWaterButton()
+  }
+  createBackground () {
     this.bg = this.add.tileSprite(400, 300, 800, 600, 'background')
-    this.currentPlant = this.add.image(400, 400, 'plant1')
-    this.currentPlant.setScale(0.3)
     this.add.text(220, 500, 'Plant Simulation Game', {
       font: '40px Bangers',
       fill: '#000000'
     })
-
-    // healthbar
+  }
+  createPlant () {
+    this.currentPlant = this.add.image(400, 400, 'plant1')
+    this.currentPlant.setScale(0.3)
+  }
+  createHPBar() {
     this.hp = new HealthBar(this.scene.scene, 80, 80)
     this.hp.setValue(10)
     this.currentHP = this.add.text(80, 140, `HP: ${this.hp.value}`, {
       fill: "#000000"
     })
-
-
-    // water button
-    this.waterButton = this.add.image(650, 80, 'waterButton')
-    this.waterButton.setScale(0.5)
-    // this.input.enabled = true
-    this.waterButton.setInteractive()
-    this.waterButton.on('pointerdown', () => {
-      this.hp.increase(20)
-      this.hp.setValue(this.hp.value)
-      this.changeHPText()
-      if (this.hp.value >= 100) {
-        this.increaseLevel()
-      }
-    })
-
   }
+  createWaterButton() {
+      // water button
+      this.waterButton = this.add.image(650, 80, 'waterButton')
+      this.waterButton.setScale(0.5)
+
+      this.waterButton.setInteractive()
+      this.waterButton.on('pointerdown', () => {
+        if (this.hp.value === 100) {
+          return;
+        }
+
+        this.hp.increase(20)
+        this.hp.setValue(this.hp.value)
+        this.changeHPText()
+        if (this.hp.value >= 100) {
+          this.increaseLevel()
+        }
+      })
+  }
+
   changeHPText () {
     this.currentHP.setText(`HP: ${this.hp.value}`);
 
@@ -53,11 +64,7 @@ export default class extends Phaser.Scene {
   increaseLevel () {
     //increases level once HP is 100
     this.level++
-
-    //Disable water button so level doesn't increase
-    console.log(this.level)
-
-
+    console.log("Level:", this.level)
     // when level increases, "plant is growing" pops up
     this.timedEvent = this.time.addEvent({
       delay: 1000,
