@@ -11,11 +11,12 @@ export default class extends Phaser.Scene {
   preload () {
     let background = this.load.image('green', './assets/images/green.jpg')
     let waterButton = this.load.image('waterButton', './assets/images/button.png')
+    let sun = this.load.image('sun', './assets/images/sun.png')
   }
 
   create () {
     this.createBackground()
-    this.createPlant('plant1')
+    this.createPlant()
     this.createHPBar()
     this.createWaterButton()
   }
@@ -26,18 +27,9 @@ export default class extends Phaser.Scene {
       fill: '#000000'
     })
   }
-  createPlant (plant) {
-    // if there is no plant, create plant1
-    // if there is already a plant, and we need to delete old plant, destroy and create
-    if (!this.currentPlant) {
+  createPlant () {
       this.currentPlant = this.add.image(400, 400, 'plant1')
       this.currentPlant.setScale(0.3)
-    } else {
-      this.currentPlant.destroy()
-      this.currentPlant = this.add.image(400, 400, plant)
-      this.currentPlant.setScale(0.3)
-    }
-
   }
   createHPBar() {
     this.hp = new HealthBar(this.scene.scene, 80, 80)
@@ -110,19 +102,19 @@ export default class extends Phaser.Scene {
         // change plant when level increases
         switch (this.level) {
           case 2:
-            this.createPlant('plant2')
+            this.updatePlant('plant2')
             break;
           case 3:
-            this.createPlant("plant3")
+            this.updatePlant("plant3")
             break;
           case 4:
-            this.createPlant("plant4")
+            this.updatePlant("plant4")
             break;
           case 5:
-            this.createPlant("plant5")
+            this.updatePlant("plant5")
             break;
           case 6:
-            this.createPlant("plant6")
+            this.updatePlant("plant6")
             break;
         }
 
@@ -141,5 +133,9 @@ export default class extends Phaser.Scene {
       }
     })
   }
-
+  updatePlant(plant) {
+    this.currentPlant.destroy()
+    this.currentPlant = this.add.image(400, 400, plant)
+    this.currentPlant.setScale(0.3)
+  }
 }
