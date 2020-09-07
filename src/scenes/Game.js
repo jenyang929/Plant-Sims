@@ -23,24 +23,20 @@ export default class extends Phaser.Scene {
     this.createHPBar()
     this.createWater()
     this.createSun()
-    // this.createDustWind()
+    this.createDustWind()
   }
    // if moisture and brightness === 10, increase HP by 25 HP. Reset moisture and brightness level = 0
   checkMoistureAndBrightness() {
-
       if (this.sun.brightness === 5 && this.water.moisture === 5) {
         this.hp.increase(50)
         this.changeHPText()
         this.resetMoistureAndBrightnessText()
       }
-
       if (this.hp.value === 100 && !this.isDisabled) {
         this.isDisabled = true
         this.increaseLevel()
         this.resetMoistureAndBrightnessText()
       }
-
-
   }
   resetMoistureAndBrightnessText() {
     this.water.moisture = 0
