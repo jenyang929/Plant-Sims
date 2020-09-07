@@ -19,12 +19,14 @@ export default class HealthBar {
     if (this.value > 100) {
       this.value = 100
     }
+    this.setValue(this.value)
   }
   decrease (amount) {
     this.value -= amount
     if (this.value < 0) {
       this.value = 0
     }
+    this.setValue(this.value)
   }
 
   makeBar (x, y, color) {
@@ -46,6 +48,7 @@ export default class HealthBar {
   }
   setValue (percentage) {
     // scale the bar
+    this.value = percentage
     this.bar.scaleX = percentage / 100
   }
   update () {}

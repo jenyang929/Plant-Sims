@@ -2,11 +2,13 @@
 import Phaser from 'phaser'
 import HealthBar from './HealthBar'
 import Sun from './Sun'
+import Water from './Water'
 
 export default class extends Phaser.Scene {
   constructor () {
     super({ key: 'GameScene' })
     this.level = 1
+    this.isDisabled = false
   }
   init (){}
   preload () {
@@ -19,20 +21,32 @@ export default class extends Phaser.Scene {
     this.createBackground()
     this.createPlant()
     this.createHPBar()
-    this.createWaterButton()
+    this.createWater()
     this.createSun()
+    // this.createDustWind()
+  }
+   // if moisture and brightness === 10, increase HP by 25 HP. Reset moisture and brightness level = 0
+  checkMoistureAndBrightness() {
 
-    // dustWind
-    // timed event where every 5 secs dust wind blows and decrease hp by 30
-    // REFACTOR DUSTWIND
-    this.dustWind = this.time.addEvent({
-      delay: 5000,
-      callback: () => {
-        this.decreaseHP()
-      },
-      loop: true
-    })
+      if (this.sun.brightness === 5 && this.water.moisture === 5) {
+        this.hp.increase(50)
+        this.changeHPText()
+        this.resetMoistureAndBrightnessText()
+      }
 
+      if (this.hp.value === 100 && !this.isDisabled) {
+        this.isDisabled = true
+        this.increaseLevel()
+        this.resetMoistureAndBrightnessText()
+      }
+
+
+  }
+  resetMoistureAndBrightnessText() {
+    this.water.moisture = 0
+    this.water.changeMoistureText()
+    this.sun.brightness = 0
+    this.sun.changeBrightnessText()
   }
   createBackground () {
     //background
@@ -54,29 +68,50 @@ export default class extends Phaser.Scene {
       fill: "#000000"
     })
   }
-  createWaterButton() {
-      // water button
-      this.waterButton = this.add.image(650, 80, 'waterButton')
-      this.waterButton.setScale(0.5)
-      this.waterButton.setInteractive()
-      this.waterButton.on('pointerdown', () => {
-        if (this.hp.value === 100) {
-          return;
+  createWater() {
+      this.water = new Water (this.scene.scene, 650, 80, 'waterButton')
+      this.water.waterButton.on('pointerdown', () => {
+        if (this.isDisabled) {
+          return
         }
-        this.hp.increase(20)
-        this.hp.setValue(this.hp.value)
-        this.changeHPText()
-        if (this.hp.value >= 100) {
-          this.increaseLevel()
-        }
+        this.water.increaseMoisture()
+        this.water.changeMoistureText()
+        this.checkMoistureAndBrightness()
       })
   }
   createSun() {
     this.sun = new Sun(this.scene.scene, 650, 200, 'sun')
+    this.sun.sunButton.on('pointerdown', () => {
+      if (this.isDisabled) {
+        return
+      }
+      this.sun.increaseBrightness()
+      this.sun.changeBrightnessText()
+      this.checkMoistureAndBrightness()
+    })
+  }
+  createDustWind() {
+      this.dustWind = this.time.addEvent({
+      delay: 10000,
+      callback: () => {
+        this.decreaseHP()
+        let dustText = this.add.text(400, 300, 'DUST WIND', {
+          fill: '#00000'
+        })
+        this.destroyDust = this.time.addEvent({
+          delay: 2000,
+          callback: () => {
+            if (dustText) {
+              dustText.destroy()
+            }
+          }
+        })
+      },
+      loop: true
+    })
   }
   decreaseHP() {
-    this.hp.decrease(30)
-    this.hp.setValue(this.hp.value)
+    this.hp.decrease(5)
     this.changeHPText()
   }
   changeHPText () {
@@ -116,8 +151,7 @@ export default class extends Phaser.Scene {
       delay: 3000,
       callback: () => {
 
-        this.hp.value = 0
-        this.hp.setValue(this.hp.value)
+        this.hp.setValue(0)
         this.changeHPText()
 
         // change plant when level increases
@@ -138,7 +172,7 @@ export default class extends Phaser.Scene {
             this.updatePlant("plant6")
             break;
         }
-
+        this.isDisabled = false
       }
     })
   }
