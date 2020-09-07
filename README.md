@@ -5,6 +5,7 @@ Objective: Take care of your plant by giving it water and sunshine!
 - Press the water button to increase the moisture level of the plant
 - Press the sun button to give the plant some light and to increase brightness level.
 - Once your brightness and moisture levels are at a certain level, the HP of the plant increases. Once you hit 100 HP, your level increases and the plant grows!
+- But be careful, there is dust wind that blows every few seconds that decreases your plant's HP!
 
 ## Front End
 
