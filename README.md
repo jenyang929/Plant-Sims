@@ -1,37 +1,47 @@
 # Plant Simulation Game
+
 Objective: Take care of your plant by giving it water and sunshine!
-- Press the water button to give the plant water! 
-- As you give water, the HP of the plant increases. Once you hit 100, your level increases and the plant grows! 
+
+- Press the water button to increase the moisture level of the plant
+- Press the sun button to give the plant some light and to increase brightness level.
+- Once your brightness and moisture levels are at a certain level, the HP of the plant increases. Once you hit 100 HP, your level increases and the plant grows!
 
 ## Front End
+
 - Phaser 3, Javascript, HTML
 
 ## Back End
+
 - Non-relational DB
 
 ## To install and play
+
 Please fork and clone this repo.
 
-To install the dependencies: 
+To install the dependencies:
 
-``` 
-npm install 
+```
+npm install
 ```
 
 To start your server
+
 ```
 npm start
 ```
 
 ## Phaser + ES6 + Webpack Boilerplate
+
 <details>
   <summary>Click to expand!</summary>
 A bootstrap project to create games with Phaser + ES6 + Webpack.
-  
 
 ## Phaser 3 supported in this branch: https://github.com/lean/phaser-es6-webpack/tree/phaser3
+
 ## Typescript supported in this branch: https://github.com/lean/phaser-es6-webpack/tree/typescript
+
 ## Features
+
 - ESLINT with JavaScript Standard Style configuration
 - Next generation of Javascript
 - Browsers are automatically updated as you change project files
@@ -39,59 +49,89 @@ A bootstrap project to create games with Phaser + ES6 + Webpack.
 - WebFont Loader
 - Multilanguage support
 - PWA Support
-## Typescript 
-If you need typescript support checkout the ```typescript``` branch. Thanks to @MatsMaker
+
+## Typescript
+
+If you need typescript support checkout the `typescript` branch. Thanks to @MatsMaker
+
 # Setup
+
 You'll need to install a few things before you have a working copy of the project.
+
 ## 1. Clone this repo:
+
 Navigate into your workspace directory.
 Run:
-```git clone https://github.com/lean/phaser-es6-webpack.git```
+`git clone https://github.com/lean/phaser-es6-webpack.git`
+
 ## 2. Install node.js and npm:
+
 https://nodejs.org/en/
+
 ## 3. Install dependencies (optionally you can install [yarn](https://yarnpkg.com/)):
+
 Navigate to the cloned repo's directory.
 Run:
-```npm install``` 
-or if you chose yarn, just run ```yarn```
+`npm install`
+or if you chose yarn, just run `yarn`
+
 ## 4. Run the development server:
+
 Run:
-```npm run dev```
+`npm run dev`
 This will run a server so you can run the game in a browser. It will also start a watch process, so you can change the source and the process will recompile and refresh the browser automatically.
 To run the game, open your browser and enter http://localhost:3000 into the address bar.
+
 ## Build for deployment:
+
 Run:
-```npm run deploy```
+`npm run deploy`
 This will optimize and minimize the compiled bundle.
+
 ## Deploy for cordova:
+
 Make sure to uncomment the cordova.js file in the src/index.html and to update config.xml with your informations. (name/description...)
 More informations about the cordova configuration:
 https://cordova.apache.org/docs/en/latest/config_ref/
-There is 3 platforms actually tested and supported : 
+There is 3 platforms actually tested and supported :
+
 - browser
 - ios
 - android
-First run (ios example):
+  First run (ios example):
+
 ```
 npm run cordova
 cordova platform add ios
 cordova run ios
 ```
+
 Update (ios example):
+
 ```
 npm run cordova
 cordova platform update ios
 cordova run ios
 ```
+
 This will optimize and minimize the compiled bundle.
+
 ## Config:
+
 before you get to work you will surely want to check the config file. You could setup dimensions, webfonts, etc
+
 ## Webfonts:
+
 In the config file you can specify which webfonts you want to include. In case you do not want to use webfonts simply leave the array empty
+
 ## Credits
+
 Big thanks to these great repos:
 https://github.com/belohlavek/phaser-es6-boilerplate
 https://github.com/cstuncsik/phaser-es6-demo
+
 ## Contributors
+
 https://github.com/RenaudROHLINGER
+
 </details>

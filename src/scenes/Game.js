@@ -1,11 +1,13 @@
 /* globals __DEV__ */
 import Phaser from 'phaser'
 import HealthBar from './HealthBar'
+import Sun from './Sun'
 
 export default class extends Phaser.Scene {
   constructor () {
     super({ key: 'GameScene' })
     this.level = 1
+    this.brightness = 0
   }
   init (){}
   preload () {
@@ -19,11 +21,25 @@ export default class extends Phaser.Scene {
     this.createPlant()
     this.createHPBar()
     this.createWaterButton()
+    this.createSun()
+
+    // timed event where every 5 secs dust wind blows and decrease hp by 30
+    this.dustWind = this.time.addEvent({
+      delay: 5000,
+      callback: () => {
+        this.decreaseHP()
+      },
+      loop: true
+    })
+
   }
   createBackground () {
     this.bg = this.add.tileSprite(400, 300, 800, 600, 'background')
     this.add.text(220, 500, 'Plant Simulation Game', {
       font: '40px Bangers',
+      fill: '#000000'
+    })
+    this.brightnessText = this.add.text(80, 200, `brightness level: ${this.brightness}`, {
       fill: '#000000'
     })
   }
@@ -57,11 +73,35 @@ export default class extends Phaser.Scene {
         }
       })
   }
-
+  createSun() {
+    this.sun = new Sun(this.scene.scene, 650, 200)
+    // this.sun = this.add.image(650, 200, 'sun')
+    this.sunButton = this.add.image(650, 200, 'sun')
+    this.sunButton.setScale(0.5)
+    this.sunButton.setInteractive()
+    this.sunButton.on('pointerdown', () => {
+      // this.hp.increase(10)
+      // this.hp.setValue(this.hp.value)
+      // this.changeHPText()
+      // if (this.hp.value >= 100) {
+      //   this.increaseLevel()
+      // }
+      console.log("brightness!!!")
+      this.increaseBrightness()
+    })
+  }
+  decreaseHP() {
+    this.hp.decrease(30)
+    this.hp.setValue(this.hp.value)
+    this.changeHPText()
+  }
   changeHPText () {
     this.currentHP.setText(`HP: ${this.hp.value}`);
-
   }
+  changeBrightnessText() {
+    this.brightnessText.setText(`brightness level: ${this.brightness}`)
+  }
+
   increaseLevel () {
     //increases level once HP is 100
     this.level++
