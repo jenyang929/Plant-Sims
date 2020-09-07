@@ -7,7 +7,6 @@ export default class extends Phaser.Scene {
   constructor () {
     super({ key: 'GameScene' })
     this.level = 1
-    this.brightness = 0
   }
   init (){}
   preload () {
@@ -23,7 +22,9 @@ export default class extends Phaser.Scene {
     this.createWaterButton()
     this.createSun()
 
+    // dustWind
     // timed event where every 5 secs dust wind blows and decrease hp by 30
+    // REFACTOR DUSTWIND
     this.dustWind = this.time.addEvent({
       delay: 5000,
       callback: () => {
@@ -34,12 +35,11 @@ export default class extends Phaser.Scene {
 
   }
   createBackground () {
+    //background
     this.bg = this.add.tileSprite(400, 300, 800, 600, 'background')
+    //title of game
     this.add.text(220, 500, 'Plant Simulation Game', {
       font: '40px Bangers',
-      fill: '#000000'
-    })
-    this.brightnessText = this.add.text(80, 200, `brightness level: ${this.brightness}`, {
       fill: '#000000'
     })
   }
@@ -58,13 +58,11 @@ export default class extends Phaser.Scene {
       // water button
       this.waterButton = this.add.image(650, 80, 'waterButton')
       this.waterButton.setScale(0.5)
-
       this.waterButton.setInteractive()
       this.waterButton.on('pointerdown', () => {
         if (this.hp.value === 100) {
           return;
         }
-
         this.hp.increase(20)
         this.hp.setValue(this.hp.value)
         this.changeHPText()
@@ -74,21 +72,7 @@ export default class extends Phaser.Scene {
       })
   }
   createSun() {
-    this.sun = new Sun(this.scene.scene, 650, 200)
-    // this.sun = this.add.image(650, 200, 'sun')
-    this.sunButton = this.add.image(650, 200, 'sun')
-    this.sunButton.setScale(0.5)
-    this.sunButton.setInteractive()
-    this.sunButton.on('pointerdown', () => {
-      // this.hp.increase(10)
-      // this.hp.setValue(this.hp.value)
-      // this.changeHPText()
-      // if (this.hp.value >= 100) {
-      //   this.increaseLevel()
-      // }
-      console.log("brightness!!!")
-      this.increaseBrightness()
-    })
+    this.sun = new Sun(this.scene.scene, 650, 200, 'sun')
   }
   decreaseHP() {
     this.hp.decrease(30)
@@ -97,9 +81,6 @@ export default class extends Phaser.Scene {
   }
   changeHPText () {
     this.currentHP.setText(`HP: ${this.hp.value}`);
-  }
-  changeBrightnessText() {
-    this.brightnessText.setText(`brightness level: ${this.brightness}`)
   }
 
   increaseLevel () {
@@ -157,18 +138,6 @@ export default class extends Phaser.Scene {
             this.updatePlant("plant6")
             break;
         }
-
-        // if (this.level === 2) {
-        //   this.createPlant('plant2')
-        // } else if (this.level === 3) {
-        //   this.createPlant('plant3')
-        // } else if (this.level === 4) {
-        //   this.createPlant('plant4')
-        // } else if (this.level === 5) {
-        //   this.createPlant('plant5')
-        // } else if (this.level === 6) {
-        //   this.createPlant('plant6')
-        // }
 
       }
     })
