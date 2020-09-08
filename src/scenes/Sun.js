@@ -20,7 +20,6 @@ export default class Sun {
     this.sunButton = this.scene.add.image(this.x, this.y, this.image)
     this.sunButton.setScale(0.5)
     this.sunButton.setInteractive()
-
   }
   createBrightnessText() {
     this.brightnessText = this.scene.add.text(80, 200, `brightness level: ${this.brightness}`, {

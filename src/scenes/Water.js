@@ -1,19 +1,17 @@
 import Phaser from 'phaser'
 
-// create waterbutton, refactor water in game.js
-// createmoisturetext && changemoisturetext
-
-
 export default class Water {
   constructor (scene, x, y, image) {
     this.x = x
     this.y = y
-    this.image = image
     this.scene = scene
+    this.image = image
     this.moisture = 0
     this.create()
   }
-  preload() {}
+  preload () {
+    let water = this.load.image(this.image, './assets/images/button.png')
+  }
   create() {
     this.createWaterButton()
     this.createMoistureText()
@@ -28,14 +26,14 @@ export default class Water {
       fill: '#000000'
     })
   }
-  changeMoistureText() {
-    this.moistureText.setText(`moisture level: ${this.moisture}`)
-  }
   increaseMoisture() {
     if (this.moisture >= 5) {
       return
     } else {
       this.moisture++
     }
+  }
+  changeMoistureText() {
+    this.moistureText.setText(`moisture level: ${this.moisture}`)
   }
 }
