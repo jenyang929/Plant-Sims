@@ -2,6 +2,7 @@
 import Phaser from 'phaser'
 import HealthBar from './HealthBar'
 import Sun from './Sun'
+import Water from './Water'
 
 export default class extends Phaser.Scene {
   constructor () {
@@ -21,18 +22,7 @@ export default class extends Phaser.Scene {
     this.createHPBar()
     this.createWaterButton()
     this.createSun()
-
-    // dustWind
-    // timed event where every 5 secs dust wind blows and decrease hp by 30
-    // REFACTOR DUSTWIND
-    this.dustWind = this.time.addEvent({
-      delay: 5000,
-      callback: () => {
-        this.decreaseHP()
-      },
-      loop: true
-    })
-
+    // this.createDustWind()
   }
   createBackground () {
     //background
@@ -56,26 +46,55 @@ export default class extends Phaser.Scene {
   }
   createWaterButton() {
       // water button
-      this.waterButton = this.add.image(650, 80, 'waterButton')
-      this.waterButton.setScale(0.5)
-      this.waterButton.setInteractive()
-      this.waterButton.on('pointerdown', () => {
-        if (this.hp.value === 100) {
-          return;
-        }
-        this.hp.increase(20)
-        this.hp.setValue(this.hp.value)
-        this.changeHPText()
-        if (this.hp.value >= 100) {
-          this.increaseLevel()
-        }
+      this.water = new Water(this.scene.scene, 650, 80, 'waterButton')
+      this.water.waterButton.on('pointerdown', () => {
+        this.water.increaseMoisture()
+        this.water.changeMoistureText()
       })
+      // this.waterButton = this.add.image(650, 80, 'waterButton')
+      // this.waterButton.setScale(0.5)
+      // this.waterButton.setInteractive()
+      // this.waterButton.on('pointerdown', () => {
+      //   if (this.hp.value === 100) {
+      //     return;
+      //   }
+      //   this.hp.increase(20)
+      //   this.hp.setValue(this.hp.value)
+      //   this.changeHPText()
+      //   if (this.hp.value >= 100) {
+      //     this.increaseLevel()
+      //   }
+      // })
   }
   createSun() {
     this.sun = new Sun(this.scene.scene, 650, 200, 'sun')
+    this.sun.sunButton.on('pointerdown', () => {
+      this.sun.increaseBrightness()
+      this.sun.changeBrightnessText()
+    })
+  }
+  createDustWind() {
+    this.dustWind = this.time.addEvent({
+      delay: 5000,
+      callback: () => {
+        this.decreaseHP()
+        this.dustText = this.add.text(400,300, 'DUST WIND!!', {
+          fill: '#000000'
+        })
+        this.destroyDustText = this.time.addEvent({
+          delay: 3000,
+          callback: () => {
+            if (this.dustText) {
+              this.dustText.destroy()
+            }
+          }
+        })
+      },
+      loop: true
+    })
   }
   decreaseHP() {
-    this.hp.decrease(30)
+    this.hp.decrease(5)
     this.hp.setValue(this.hp.value)
     this.changeHPText()
   }
