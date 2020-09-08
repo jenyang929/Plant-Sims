@@ -11,10 +11,6 @@ Objective: Take care of your plant by giving it water and sunshine!
 
 - Phaser 3, Javascript, HTML
 
-## Back End
-
-- Non-relational DB
-
 ## To install and play
 
 Please fork and clone this repo.
